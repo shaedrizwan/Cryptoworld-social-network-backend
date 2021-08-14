@@ -10,6 +10,7 @@ const userRoute = require('./routes/user.route')
 dotenv.config()
 initializeDB()
 app.use(cors())
+app.use(express.json())
 
 
 app.use('/post',postRoute)
