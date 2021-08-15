@@ -28,9 +28,10 @@ router.route('/signup')
 router.use(checkUser)
 router.route('/login')
     .post((req,res)=>{
-        const {userId} = req.user
-        const token = jwt.sign({userId},process.env.TOKEN_SECRET,{expiresIn:'24h'})
-        res.json({success:true,userId,token})
+        const user = req.user
+        user.password = undefined
+        const token = jwt.sign({userId:user._id},process.env.TOKEN_SECRET,{expiresIn:'24h'})
+        res.json({success:true,token,user})
     })
 
 module.exports = router
