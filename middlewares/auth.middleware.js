@@ -27,10 +27,10 @@ const verifyAuth = (req,res,next) =>{
     const token = req.headers.authorization;
     try{
         const decoded = jwt.verify(token,process.env.TOKEN_SECRET);
-        req.user = decoded.userId;
+        req.userId = decoded.userId;
         return next();
     } catch(err){
-        return res.json({success:false,message:"Unauthorized access"})
+        return res.status(403).json({success:false,message:"Unauthorized access"})
     }
 }
 
