@@ -4,7 +4,9 @@ const Schema = mongoose.Schema
 
 const postSchema = new Schema({
     post:String,
-    user:{type:mongoose.Types.ObjectId,ref:User},
+    name:String,
+    username:String,
+    profilePicture:String,
     likes:[{type:mongoose.Types.ObjectId,ref:User}]
 },
 {
