@@ -36,4 +36,30 @@ router.route('/add')
         }
     })
 
+router.route('/likePost')
+    .post(async(req,res)=>{
+        try{
+            const userId = req.userId
+            const {postId} = req.body
+            const post = await Post.findById(postId)
+            console.log(typeof(userId))
+            const isLiked = post.likes.find(id => String(id) === userId)
+            console.log("isLiked:", isLiked)
+            if(isLiked){
+                console.log("Inside Liked")
+                post.likes.pop(userId)
+                const updatedLikes = await post.save()
+                res.json({success:true,message:"Unliked successfully",updatedLikes})
+            }else{
+                console.log("Inside Not liked")
+                post.likes.push(userId)
+                const updatedLikes = await post.save()
+                res.json({success:true,message:"Liked successfully",updatedLikes})
+            }
+        }catch(err){
+            res.josn({success:false,error:err.message})
+        }
+    })
+
+
 module.exports = router
